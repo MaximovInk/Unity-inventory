@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using MaximovInk.Utils;
 
 namespace MaximovInk.Inventory
 {
-    public class InventoryManager : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class InventoryManager : Singleton<InventoryManager> , IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        public ItemDatabase itemDatabase;
+        public ItemDatabase ItemDatabase;
 
-        public Image dragging_item;
+        public Button ActionButtonPrefab;
+
+        public Image DragItem;
+        public Tooltip Tooltip;
 
         private Slot begin;
         private Slot end;
@@ -20,7 +24,7 @@ namespace MaximovInk.Inventory
         private void Update()
         {
             if (draging)
-                dragging_item.transform.position = Input.mousePosition;
+                DragItem.transform.position = Input.mousePosition;
         }
 
         public void OnBeginDrag(PointerEventData eventData)
@@ -32,10 +36,9 @@ namespace MaximovInk.Inventory
             {
                 if (eventData.pointerCurrentRaycast.gameObject.GetComponent<Slot>() && eventData.pointerCurrentRaycast.gameObject.GetComponent<Slot>().DataItem.Item != null)
                 {
-
                     begin = eventData.pointerCurrentRaycast.gameObject.GetComponent<Slot>();
-                    dragging_item.sprite = begin.DataItem.Item.sprite;
-                    dragging_item.gameObject.SetActive(true);
+                    DragItem.sprite = begin.DataItem.Item.Sprite;
+                    DragItem.gameObject.SetActive(true);
                 }
             }
 
@@ -44,13 +47,13 @@ namespace MaximovInk.Inventory
 
         public void OnDrag(PointerEventData eventData)
         {
-            dragging_item.transform.position = Input.mousePosition;
+                DragItem.transform.position = Input.mousePosition;
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
-            dragging_item.gameObject.SetActive(false);
-            dragging_item.sprite = null;
+            DragItem.gameObject.SetActive(false);
+            DragItem.sprite = null;
             if (eventData.pointerCurrentRaycast.gameObject != null)
             {
                 if (eventData.pointerCurrentRaycast.gameObject.GetComponent<Slot>())
@@ -71,7 +74,7 @@ namespace MaximovInk.Inventory
 
             if (end.DataItem.Equals( begin.DataItem))
             {
-                uint max = begin.DataItem.Item.max_stack;
+                uint max = begin.DataItem.Item.MaxStack;
                 uint have = end.DataItem.Count;
 
                 uint add = dragType == DragType.FULL ? begin.DataItem.Count : dragType == DragType.HALF ? begin.DataItem.Count/2 : 1;
@@ -97,8 +100,8 @@ namespace MaximovInk.Inventory
             {
                 moveDifferentItems(begin, end);
             }
-            begin.Refresh();
-            end.Refresh();
+            begin.refresh();
+            end.refresh();
 
             return true;
         }
@@ -130,6 +133,14 @@ namespace MaximovInk.Inventory
             FULL,
             HALF,
             ONE
+        }
+
+        public void SelectItem(Slot slot)
+        {
+            Debug.Log("Item select :" + slot.DataItem.Item.name);
+            Tooltip.clear();
+            Tooltip.init(slot);
+            Tooltip.transform.position = slot.transform.position;
         }
     }
 }

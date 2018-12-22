@@ -16,6 +16,9 @@ namespace MaximovInk.Inventory
 
         public bool Equals(DataItem other)
         {
+            if (GetHashCode() != other.GetHashCode())
+                return false;
+
             if (Item != other.Item)
                 return false;
             if (Condition != other.Condition)
@@ -38,11 +41,18 @@ namespace MaximovInk.Inventory
             Condition = 1;
         }
 
-        public DataItem(DataItem other)
+        public DataItem(DataItem other, uint count = 1)
         {
             Item = other.Item;
             Condition = other.Condition;
-            Count = other.Count;
+            Count = count;
+        }
+
+        public DataItem(ItemBase asset)
+        {
+            Item = asset;
+            Condition = asset.MaxCondition;
+            Count = asset.MaxStack;
         }
     }
 }
