@@ -10,7 +10,6 @@ Tested on version 2018.2.14f1
 - [ ] Storages and other interacts
 - [ ] Editor
 - [ ] Localization
-- [ ] \(Optional) Open a followup issue
 
 **Input:**
 - Left mouse button - drag full
