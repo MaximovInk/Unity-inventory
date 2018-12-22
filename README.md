@@ -20,8 +20,9 @@ Tested on version 2018.2.14f1
 
 **Screenshots**
 
-> ![Imgur](https://i.imgur.com/HIouhXX.png)
-> ![Imgur](https://i.imgur.com/H6EhYwO.png)
+<img src="https://i.imgur.com/HIouhXX.png" alt="alt text" width="420" height="269">
+<img src="https://i.imgur.com/H6EhYwO.png" alt="alt text" width="420" height="269">
+<img src="https://i.imgur.com/evMxCpa.png" alt="alt text" width="371" height="560">
 
 **Version 0.2**
 - Added UseFunctions
