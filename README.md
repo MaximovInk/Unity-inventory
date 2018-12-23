@@ -15,11 +15,16 @@
 - [ ] Localization
 - [ ] Wiki
 
-**Input:**
+**PC input:**
 - Left mouse button - drag full
 - Right mouse button - drag half
 - Middle mouse button - drag one
-- Double click for open tooltip
+- Double click - open tooltip
+
+
+**Mobile input:**
+- Touch - drag
+- Double touch - open tooltip
 
 **Screenshots**
 
