@@ -9,17 +9,36 @@ namespace MaximovInk.Inventory
     {
         public ItemDatabase ItemDatabase;
 
+        public LayerMask dropObstacles;
+
         public Button ActionButtonPrefab;
+        public DragItem DragItemPrefab;
 
         public Image DragItem;
         public Tooltip Tooltip;
 
+        public Inventory MainInventory;
+        public Transform player;
+        public TextMesh DragItemText;
+
+        public Inventory[] inventories;
+
+        private bool draging = false;
         private Slot begin;
         private Slot end;
 
         private DragType dragType;
 
-        private bool draging = false;
+        private void Awake()
+        {
+            if (inventories.Length == 0)
+                Debug.LogError("set at least one inventory in inventories array");
+
+            for (int i = 0; i < inventories.Length; i++)
+            {
+                inventories[i].Init();
+            }   
+        }
 
         private void Update()
         {
@@ -85,7 +104,6 @@ namespace MaximovInk.Inventory
                 }
                 if (have + add >= max)
                 {
-                    Debug.Log("have + add > max");
                     end.DataItem.Count = max;
                     begin.DataItem.Count -= (max - have);
 
@@ -137,10 +155,37 @@ namespace MaximovInk.Inventory
 
         public void SelectItem(Slot slot)
         {
-            Debug.Log("Item select :" + slot.DataItem.Item.name);
             Tooltip.clear();
             Tooltip.init(slot);
             Tooltip.transform.position = slot.transform.position;
+        }
+
+        public void HideDragItemText()
+        {
+            DragItemText.gameObject.SetActive(false);
+            DragItemText.text = string.Empty;
+        }
+
+        public void ShowDragItemText(string name , Vector2 position)
+        {
+            DragItemText.gameObject.SetActive(true);
+            DragItemText.text = name;
+            DragItemText.transform.position = new Vector3(position.x, position.y, DragItemText.transform.position.z);
+        }
+
+        public void DropItem(Slot from)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(player.transform.position, -Vector2.up, 999 , layerMask: dropObstacles);
+
+            if (hit.collider != null)
+            {
+                Vector2 pos = new Vector2(hit.point.x , hit.point.y + from.DataItem.Item.Sprite.bounds.size.x /2);
+
+                DragItem drItem = Instantiate(DragItemPrefab, pos, Quaternion.identity, null);
+                drItem.item = new DataItem(from.DataItem);
+                drItem.Init();
+            }
+            
         }
     }
 }

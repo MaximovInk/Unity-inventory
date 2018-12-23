@@ -7,9 +7,14 @@ namespace MaximovInk.Inventory {
     {
         public List<Slot> slots = new List<Slot>();
 
-        private void Awake()
+        public virtual void Init()
         {
             slots = GetComponentsInChildren<Slot>().ToList();
+            for (int i = 0; i < slots.Count; i++)
+            {
+                slots[i].ID = i;
+                slots[i].Init();
+            }
         }
 
         public void AddItem(DataItem item)

@@ -1,41 +1,56 @@
-﻿using UnityEngine;
-using MaximovInk.Utils;
+﻿using MaximovInk.Utils;
+using MaximovInk.Inventory;
 
 public class GameManager : Singleton<GameManager> {
-    public Player player = new Player();
-    public float water_demand = 1f;
-    public float eat_demand = 1f;
+    private EventManager eventManager;
+    public Character player;
 
-    public float period = 0f;
-
-    private void Update()
+    private void Start()
     {
-        if (period > 3)
-        {
-            period = 0;
+        eventManager = EventManager.Instance;
 
-            player.water -= eat_demand;
-            player.water = Mathf.Clamp(player.water, 0, 100);
-
-            player.eat -= eat_demand;
-            player.eat = Mathf.Clamp(player.eat, 0, 100);
-
-            if (player.water == 0 || player.eat == 0)
-            {
-                player.health -= 0.01f;
-            }
-        }
-        period += Time.deltaTime;
+        eventManager.onDrink += Manager_onDrink;
+        eventManager.onEat += Manager_onEat;
+        eventManager.onHeal += Manager_onHeal;
+        eventManager.onItemChange += Manager_onItemChange;
+        eventManager.onEquip += EventManager_onEquip;
     }
 
-    [System.Serializable]
-    public class Player
+    private void EventManager_onEquip(int index)
     {
 
-        public float health = 100;
+    }
 
-        public float water = 100;
+    private void Manager_onItemChange(int id, int count, Slot from)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            DataItem new_item = new DataItem(InventoryManager.Instance.ItemDatabase.items[id]);
+            new_item.Condition = from.DataItem.Condition / from.DataItem.Item.MaxCondition * new_item.Item.MaxCondition;
+            from.GetComponentInParent<Inventory>().AddItem(new_item);
+        }
+    }
 
-        public float eat = 100;
+    private void Manager_onHeal(float heal)
+    {
+        player.health += heal;
+    }
+
+    private void Manager_onEat(float eat)
+    {
+        player.eat += eat;
+    }
+
+    private void Manager_onDrink(float drink)
+    {
+        player.water += drink;
+    }
+
+    private void OnDestroy()
+    {
+        eventManager.onDrink -= Manager_onDrink;
+        eventManager.onEat -= Manager_onEat;
+        eventManager.onHeal -= Manager_onHeal;
+        eventManager.onItemChange -= Manager_onItemChange;
     }
 }

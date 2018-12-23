@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/MaximovInk/BasicInventory/Demo/Scenes/Demo1.unity
+    guid: 47a43bba5a5635a4da74e2d96fbf727e
   m_configObjects: {}

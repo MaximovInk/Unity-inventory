@@ -9,24 +9,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55e4772a02bd6eb4f82cc3bc41e710a6, type: 3}
-  m_Name: MeatItem
+  m_Name: Pear
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300026, guid: 4d8c2c7abfa12954b988261d8ab7ae15, type: 3}
+  Sprite: {fileID: 21300002, guid: 4d8c2c7abfa12954b988261d8ab7ae15, type: 3}
   DroppedSprite: {fileID: 0}
-  Type: 2
+  Type: 0
   Rarity: 1
-  Description: raw chicken
-  Weight: 0.2
-  MaxStack: 2
-  MaxCondition: 1
-  UseFunctions:
-  - name: Cook
-    events:
-    - type: 6
-      value: 1
-  - name: Eat
-    events:
-    - type: 1
-      value: 10/3
-    - type: 2
-      value: 1/3
+  Description: sweet to the taste
+  Weight: 0
+  MaxStack: 0
+  MaxCondition: 0
+  UseFunctions: []

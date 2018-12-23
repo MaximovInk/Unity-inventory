@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System;
 using System.Collections.Generic;
 namespace MaximovInk.Inventory
@@ -12,6 +11,8 @@ namespace MaximovInk.Inventory
         public Sprite Sprite;
 
         public Sprite DroppedSprite;
+
+        public Sprite GetDroppedSprite()  { return DroppedSprite != null ? DroppedSprite : Sprite;   }
 
         public ITEM_TYPE Type;
 

@@ -21,9 +21,16 @@ namespace MaximovInk.Inventory
             Description.text = "Description: " +item.Item.Description;
             Sprite.sprite = item.Item.Sprite;
 
+            Button actionButtonPrefab = InventoryManager.Instance.ActionButtonPrefab;
+
+            Button dropButton = Instantiate(actionButtonPrefab, transform);
+            dropButton.onClick.AddListener(() => { InventoryManager.Instance.DropItem(slot); slot.DataItem.Item = null; slot.refresh(); } );
+            dropButton.GetComponentInChildren<Text>().text = "Drop";
+            actionButtons.Add(dropButton.gameObject);
+
             for (int f = 0; f < item.Item.UseFunctions.Count; f++)
             {
-                Button actionButton = Instantiate(InventoryManager.Instance.ActionButtonPrefab, transform);
+                Button actionButton = Instantiate(actionButtonPrefab, transform);
                 int function = f;
 
                 actionButton.onClick.AddListener(() => { item.Item.Use(function, slot); gameObject.SetActive(false); });

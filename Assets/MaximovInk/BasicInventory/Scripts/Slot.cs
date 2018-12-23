@@ -1,35 +1,41 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace MaximovInk.Inventory
 {
     public class Slot : MonoBehaviour
-    { 
+    {
+        public int ID;
+
         public DataItem StartItem;
         public DataItem DataItem
         {
             get { return data_item; }
             set  { data_item = value; refresh(); }
         }
-        private DataItem data_item = new DataItem();
+        protected DataItem data_item = new DataItem();
 
-        private Image sprite_image;
+        protected Image sprite_image;
 
-        private Text count_text;
+        protected Text count_text;
 
-        private Slider condition_slider;
-
-        private float clicked_timer = 1;
-        private bool clicked = false;
-
-        private void Awake()
+        public virtual void Init()
         {
-            
+            image = GetComponent<Image>();
             sprite_image = transform.GetChild(0).GetComponent<Image>();
             count_text = GetComponentInChildren<Text>();
             condition_slider = GetComponentInChildren<Slider>();
+            DataItem = StartItem;
             refresh();
         }
+
+        protected Slider condition_slider;
+
+        public Image image;
+
+        protected float clicked_timer = 1;
+        protected bool clicked = false;
 
         public virtual bool setItem(DataItem item)
         {
@@ -41,12 +47,7 @@ namespace MaximovInk.Inventory
             return false;
         }
 
-        private void Start()
-        {
-            DataItem = StartItem;
-        }
-
-        private void set(Sprite sprite, Color color)
+        protected void set(Sprite sprite, Color color)
         {
             sprite_image.sprite = sprite;
             sprite_image.color = color;
@@ -87,8 +88,9 @@ namespace MaximovInk.Inventory
             condition_slider.gameObject.SetActive(condition_slider.value != 0 ? true : false);
         }
 
-        public void click()
+        public virtual void click()
         {
+            onClick();
             if (clicked && DataItem.Item != null)
             {
                 InventoryManager.Instance.SelectItem(this);
@@ -97,6 +99,11 @@ namespace MaximovInk.Inventory
             {
                 clicked = true;
             }       
+        }
+
+        protected virtual void onClick()
+        {
+
         }
 
         private void Update()

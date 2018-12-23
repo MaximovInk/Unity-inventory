@@ -1,100 +1,99 @@
 ﻿using UnityEngine;
 using MaximovInk.Utils;
-using System.Collections.Generic;
 
 namespace MaximovInk.Inventory
 {
     public class EventManager : Singleton<EventManager>
     {
+        public delegate void OnEquip(int index);
+        public delegate void OnHeal(float health);
+        public delegate void OnEat(float eat);
+        public delegate void OnDrink(float drink);
+        public delegate void OnItemChange(int id , int count, Slot from);
+
+        public event OnEquip onEquip;
+        public event OnHeal onHeal;
+        public event OnEat onEat;
+        public event OnDrink onDrink;
+        public event OnItemChange onItemChange;
 
         public void UseFunction(UseFunction function, Slot from)
         {
-            Debug.Log(function.name);
-
             for (int i = 0; i < function.events.Count; i++)
             {
                 UsableEvent(function.events[i],from);
             }
         }
 
-        private void UsableEvent(USABLE_EVENT _event ,Slot from)
+        private void UsableEvent(USABLE_EVENT _event, Slot from)
         {
             string[] parameters = _event.value.Split('/');
 
             if (parameters.Length == 0)
                 return;
 
+            if (from.DataItem.Item == null)
+                return;
+
+            float first_param = 0;
+
+            float.TryParse(parameters[0], out first_param);
+
+            float second_param = 1;
+
+            if (parameters.Length > 1)
+            {
+                float.TryParse(parameters[1], out second_param);
+                from.DataItem.Condition -= (from.DataItem.Item.MaxCondition / second_param / from.DataItem.Count);
+            }
+            else
+            {
+                from.DataItem.Count -= 1;
+            }
+
             switch (_event.type)
             {
                 case USE_TYPE.EQUIP:
+                    if (onEquip != null)
+                    {
+                        onEquip((int)Mathf.Clamp( first_param,0,999));
+                    }
                     break;
                 case USE_TYPE.HEAL:
+                    float heal = first_param;
+                    if (onHeal != null)
+                    {
+                        onHeal(heal);
+                    }
                     break;
                 case USE_TYPE.EAT:
-                    float eat = 0;
-                    float.TryParse(parameters[0], out eat);
+                    float eat = second_param;
                     eat *= from.DataItem.Condition / from.DataItem.Item.MaxCondition;
-
-                    if (parameters.Length > 1)
+                    if (onEat != null)
                     {
-                        float div = 1;
-                        float.TryParse(parameters[1], out div);
-
-                        GameManager.Instance.player.eat += eat;
-
-                        from.DataItem.Condition -= (from.DataItem.Item.MaxCondition /div / from.DataItem.Count);
+                        onEat(eat);
                     }
-                    else
-                    {
-                        GameManager.Instance.player.eat += eat;
-                        from.DataItem.Count -=1;
-                    }
-                    from.refresh();
-
                     break;
                 case USE_TYPE.DRINK:
+                    float water = second_param;
+                    water *= from.DataItem.Condition / from.DataItem.Item.MaxCondition;
+                    if (onDrink != null)
+                    {
+                        onDrink(water);
+                    }
                     break;
                 case USE_TYPE.CHANGE:
-                    int id = 0;
-                    int.TryParse(parameters[0], out id);
+                    int id = (int)Mathf.Clamp(first_param, 0, 999);
                     if (id >= InventoryManager.Instance.ItemDatabase.items.Length)
                         return;
 
-                    if (parameters.Length > 1)
+                    if (onItemChange != null)
                     {
-                        int count = 0;
-
-                        int.TryParse(parameters[1], out count);
-
-                        for (int i = 0; i < count; i++)
-                        {
-                            DataItem di = new DataItem(InventoryManager.Instance.ItemDatabase.items[id]);
-                            di.Condition = from.DataItem.Condition / from.DataItem.Item.MaxCondition * di.Item.MaxCondition;
-                            from.GetComponentInParent<Inventory>().AddItem(di);
-                        }
-
-                        from.DataItem.Count--;
-                        from.refresh();
+                        onItemChange(id, (int)Mathf.Clamp(second_param,1,999), from);
                     }
-                    else
-                    {
-                        from.DataItem.Count--;
-
-                        /*float before = from.DataItem.Count;
-                        float after = before - 1;
-                        from.DataItem.Count = (uint)after;
-                        from.DataItem.Condition -= from.DataItem.Condition/ from.DataItem.Item.MaxCondition *  after / before;*/
-                        DataItem di = new DataItem(InventoryManager.Instance.ItemDatabase.items[id]);
-                        di.Condition = from.DataItem.Condition / from.DataItem.Item.MaxCondition * di.Item.MaxCondition;
-                        from.GetComponentInParent<Inventory>().AddItem(di);
-                        from.refresh();
-                    }
-                    
-                    break;
-                default:
                     break;
             }
+            from.refresh();
         }
-
     }
 }
