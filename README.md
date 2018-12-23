@@ -19,7 +19,8 @@ Heed more information ? [Go to Wiki](https://github.com/MaximovInk/UnityBasicInv
 - [x] Drag&Drop
 - [x] Stacking
 - [x] Tooltip / Usable
-- [ ] Drop/Drag in world
+- [x] Hotbars
+- [x] Drop/Drag in world
 - [ ] Storages and other interacts
 - [ ] Equipment
 - [ ] Weapons
@@ -32,6 +33,13 @@ Heed more information ? [Go to Wiki](https://github.com/MaximovInk/UnityBasicInv
 <img src="https://i.imgur.com/HIouhXX.png" alt="alt text" width="420" height="269">
 <img src="https://i.imgur.com/H6EhYwO.png" alt="alt text" width="420" height="269">
 <img src="https://i.imgur.com/evMxCpa.png" alt="alt text" width="371" height="560">
+
+**Version 0.3**
+- Added more items, players for demo
+- Added drag items
+- Added hotbar
+- Refactoring EventManager , Inventory , InventoryManager
+- Tooltip now has a built-in drop function
 
 **Version 0.2**
 - Added UseFunctions
