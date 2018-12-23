@@ -53,7 +53,7 @@ namespace MaximovInk.Inventory
     {
         NONE,
         WEAPON,
-        EAT
+        FOOD
     }
 
     public enum USE_TYPE
@@ -62,8 +62,6 @@ namespace MaximovInk.Inventory
         HEAL,
         EAT,
         DRINK,
-        REGENERATION,
-        DAMAGE,
         CHANGE
     }
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   Sprite: {fileID: 21300026, guid: 4d8c2c7abfa12954b988261d8ab7ae15, type: 3}
   DroppedSprite: {fileID: 0}
   Type: 2
-  Rarity: 0
+  Rarity: 1
   Description: raw chicken
   Weight: 0.2
   MaxStack: 2
