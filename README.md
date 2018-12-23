@@ -1,6 +1,7 @@
 # UnityBasicInventory
-Basic inventory for Unity
-Tested on version 2018.2.14f1
+## Basic inventory for Unity
+## Tested on version 2018.2.14f1
+## Working on mobile!
 
 **ToDo:**
 - [x] Drag&Drop
