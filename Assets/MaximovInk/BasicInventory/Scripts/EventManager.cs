@@ -54,10 +54,6 @@ namespace MaximovInk.Inventory
                     break;
                 case USE_TYPE.DRINK:
                     break;
-                case USE_TYPE.REGENERATION:
-                    break;
-                case USE_TYPE.DAMAGE:
-                    break;
                 case USE_TYPE.CHANGE:
                     int id = 0;
                     int.TryParse(parameters[0], out id);
