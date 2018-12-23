@@ -1,6 +1,19 @@
 # UnityBasicInventory
-Basic inventory for Unity
-Tested on version 2018.2.14f1
+## Basic inventory for Unity
+## Tested on version 2018.2.14f1
+## Working on mobile!
+
+**PC input:**
+- Left mouse button - drag full
+- Right mouse button - drag half
+- Middle mouse button - drag one
+- Double click - open tooltip
+
+**Mobile input:**
+- Touch - drag
+- Double touch - open tooltip
+
+Heed more information ? [Go to Wiki](https://github.com/MaximovInk/UnityBasicInventory/wiki)
 
 **ToDo:**
 - [x] Drag&Drop
@@ -8,15 +21,11 @@ Tested on version 2018.2.14f1
 - [x] Tooltip / Usable
 - [ ] Drop/Drag in world
 - [ ] Storages and other interacts
+- [ ] Equipment
+- [ ] Weapons
 - [ ] Editor
 - [ ] Localization
 - [ ] Wiki
-
-**Input:**
-- Left mouse button - drag full
-- Right mouse button - drag half
-- Middle mouse button - drag one
-- Double click for open tooltip
 
 **Screenshots**
 
