@@ -8,6 +8,8 @@ Tested on version 2018.2.14f1
 - [x] Tooltip / Usable
 - [ ] Drop/Drag in world
 - [ ] Storages and other interacts
+- [ ] Equipment
+- [ ] Weapons
 - [ ] Editor
 - [ ] Localization
 - [ ] Wiki
