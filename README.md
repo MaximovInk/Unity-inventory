@@ -21,7 +21,7 @@ Heed more information ? [Go to Wiki](https://github.com/MaximovInk/UnityBasicInv
 - [x] Tooltip / Usable
 - [x] Hotbars
 - [x] Drop/Drag in world
-- [ ] Storages and other interacts
+- [ ] Storages and other interacts - in developent
 - [ ] Equipment
 - [ ] Weapons
 - [ ] Editor
