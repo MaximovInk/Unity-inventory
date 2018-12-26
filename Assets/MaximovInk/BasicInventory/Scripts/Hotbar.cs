@@ -7,9 +7,9 @@ namespace MaximovInk.Inventory
         public int SelectedSlot;
         public Color SelectedColor = Color.HSVToRGB(0,0,86);
 
-        public override void Init()
+        protected override void OnInit()
         {
-            base.Init();
+            base.OnInit();
             for (int i = 0; i < slots.Count; i++)
             {
                 (slots[i] as HotbarSlot).hotbar = this;

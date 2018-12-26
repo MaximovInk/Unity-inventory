@@ -16,7 +16,7 @@ MonoBehaviour:
   Type: 1
   Rarity: 2
   Description: 
-  Weight: 0
-  MaxStack: 0
-  MaxCondition: 0
+  Weight: 1
+  MaxStack: 2
+  MaxCondition: 4
   UseFunctions: []

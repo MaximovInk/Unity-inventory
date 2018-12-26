@@ -1,13 +1,12 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace MaximovInk.Inventory {
-    public class Inventory : MonoBehaviour
+    public class Inventory : InventoryPanel
     {
         public List<Slot> slots = new List<Slot>();
 
-        public virtual void Init()
+        protected override void OnInit()
         {
             slots = GetComponentsInChildren<Slot>().ToList();
             for (int i = 0; i < slots.Count; i++)

@@ -9,33 +9,40 @@ namespace MaximovInk.Inventory
         public int ID;
 
         public DataItem StartItem;
-        public DataItem DataItem
+       public DataItem DataItem
         {
             get { return data_item; }
             set  { data_item = value; refresh(); }
         }
         protected DataItem data_item = new DataItem();
 
-        protected Image sprite_image;
-
-        protected Text count_text;
-
-        public virtual void Init()
-        {
-            image = GetComponent<Image>();
-            sprite_image = transform.GetChild(0).GetComponent<Image>();
-            count_text = GetComponentInChildren<Text>();
-            condition_slider = GetComponentInChildren<Slider>();
-            DataItem = StartItem;
-            refresh();
-        }
-
-        protected Slider condition_slider;
-
         public Image image;
+
+        protected Image sprite_image;
+        protected Slider condition_slider;
+        protected Text count_text;
 
         protected float clicked_timer = 1;
         protected bool clicked = false;
+
+        private bool isInit = false;
+
+        public virtual void Init()
+        {
+            if (!isInit)
+            {
+                condition_slider = GetComponentInChildren<Slider>();
+                image = GetComponent<Image>();
+                sprite_image = transform.GetChild(0).GetComponent<Image>();
+                count_text = GetComponentInChildren<Text>();
+
+                DataItem = StartItem;
+
+                refresh();
+            }
+
+            isInit = true;
+        }
 
         public virtual bool setItem(DataItem item)
         {
@@ -55,8 +62,8 @@ namespace MaximovInk.Inventory
 
         public void refresh()
         {
-            
-            if(data_item.Condition <= 0 || data_item.Count <= 0 || data_item.Item == null)
+
+            if (data_item.Condition <= 0 || data_item.Count <= 0 || data_item.Item == null)
             {
                 data_item.Item = null;
                 data_item.Count = 0;
@@ -81,11 +88,10 @@ namespace MaximovInk.Inventory
                 set(null, Color.clear);
             }
 
-            count_text.text = data_item.Item != null ? data_item.Count > 0 ? data_item.Count.ToString() :string.Empty : string.Empty;
-
-            condition_slider.value = data_item.Item != null ? data_item.Condition /data_item.Item.MaxCondition  : 0;
-
+            condition_slider.value = data_item.Item != null ? data_item.Condition / data_item.Item.MaxCondition : 0;
             condition_slider.gameObject.SetActive(condition_slider.value != 0 ? true : false);
+            
+            count_text.text = data_item.Item != null ? data_item.Count > 0 ? data_item.Count.ToString() : string.Empty : string.Empty;
         }
 
         public virtual void click()

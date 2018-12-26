@@ -10,9 +10,9 @@ namespace MaximovInk.Inventory
         [SerializeField]
         public ItemBase Item;
 
-        public float Condition;
+        public float Condition { get; set; }
 
-        public uint Count;
+        public uint Count { get; set; }
 
         public bool Equals(DataItem other)
         {

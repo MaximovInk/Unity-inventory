@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using MaximovInk.Utils;
+using System.Collections.Generic;
 
 namespace MaximovInk.Inventory
 {
@@ -13,15 +14,23 @@ namespace MaximovInk.Inventory
 
         public Button ActionButtonPrefab;
         public DragItem DragItemPrefab;
+        public Button IconPrefab;
 
         public Image DragItem;
         public Tooltip Tooltip;
 
         public Inventory MainInventory;
-        public Transform player;
+        public Hotbar hotbar;
+        public Transform Player;
         public TextMesh DragItemText;
 
-        public Inventory[] inventories;
+        public List<InventoryPanel> inventoryPanelsCustom = new List<InventoryPanel>();
+
+        [HideInInspector]
+        public List<InventoryPanel> InventoryPanels = new List<InventoryPanel>();
+
+        public Transform PanelsParent;
+        public Transform IconsParent;
 
         private bool draging = false;
         private Slot begin;
@@ -31,13 +40,25 @@ namespace MaximovInk.Inventory
 
         private void Awake()
         {
-            if (inventories.Length == 0)
-                Debug.LogError("set at least one inventory in inventories array");
+            if (!InventoryPanels.Contains(MainInventory))
+                AddInvPanel(MainInventory);
 
-            for (int i = 0; i < inventories.Length; i++)
+            if (hotbar != null)
+                hotbar.Init();
+
+            for (int i = 0; i < inventoryPanelsCustom.Count; i++)
             {
-                inventories[i].Init();
-            }   
+                AddInvPanel(inventoryPanelsCustom[i]);
+            }
+
+            if (InventoryPanels.Count == 0)
+                Debug.LogError("set at least one inventory in inventories list");
+
+            for (int i = 0; i < InventoryPanels.Count; i++)
+            {
+                InventoryPanels[i].Init();
+            }
+            IconsRefresh();
         }
 
         private void Update()
@@ -137,6 +158,7 @@ namespace MaximovInk.Inventory
             else
             {
                 uint add = dragType == DragType.FULL ? begin.DataItem.Count : dragType == DragType.HALF ? begin.DataItem.Count / 2 : 1;
+                
                 end.DataItem = new DataItem(begin.DataItem);
                 end.DataItem.Count = add;
                 begin.DataItem.Count -= add;
@@ -175,7 +197,7 @@ namespace MaximovInk.Inventory
 
         public void DropItem(Slot from)
         {
-            RaycastHit2D hit = Physics2D.Raycast(player.transform.position, -Vector2.up, 999 , layerMask: dropObstacles);
+            RaycastHit2D hit = Physics2D.Raycast(Player.transform.position, -Vector2.up, 999 , layerMask: dropObstacles);
 
             if (hit.collider != null)
             {
@@ -186,6 +208,58 @@ namespace MaximovInk.Inventory
                 drItem.Init();
             }
             
+        }
+
+        public int AddInvPanel(InventoryPanel panel)
+        {
+            InventoryPanels.Add(panel);
+            panel.Init();
+            Button b = Instantiate(IconPrefab.gameObject, IconsParent).GetComponent<Button>();
+            panel.IconIndex = b.transform.GetSiblingIndex();
+            IconsRefresh();
+            return InventoryPanels.IndexOf(panel);
+        }
+
+        public int InstantiateInvPanel(InventoryPanel panel)
+        {
+            InventoryPanel p = Instantiate(panel.gameObject, PanelsParent).GetComponent<InventoryPanel>();
+            InventoryPanels.Add(p);
+            p.Init();
+            Button b = Instantiate(IconPrefab.gameObject, IconsParent).GetComponent<Button>();
+            p.IconIndex = b.transform.GetSiblingIndex();
+            IconsRefresh();
+            return InventoryPanels.IndexOf(p);
+        }
+
+        public void RemoveInventoryPanel(int index)
+        {
+            Destroy(IconsParent.GetChild(InventoryPanels[index].IconIndex).gameObject);
+            Destroy(InventoryPanels[index].gameObject);
+            InventoryPanels.RemoveAt(index);
+            IconsRefresh();
+        }
+
+        public void IconsRefresh()
+        {
+            for (int i = 0; i < InventoryPanels.Count; i++)
+            {
+                Button b = IconsParent.GetChild( InventoryPanels[i].IconIndex).GetComponent<Button>();
+                b.GetComponent<Image>().sprite = InventoryPanels[i].icon;
+                b.onClick.RemoveAllListeners();
+
+                int iDublicate = i;
+
+                b.onClick.AddListener(() => { InventoryPanels[iDublicate].gameObject.SetActive(true); });
+
+                for (int k = 0; k < InventoryPanels.Count; k++)
+                {
+                    if (k != iDublicate)
+                    {
+                        int kDoublicate = k;
+                        b.onClick.AddListener(() => { InventoryPanels[kDoublicate].gameObject.SetActive(false); });
+                    }
+                }
+            }
         }
     }
 }
