@@ -34,9 +34,14 @@ Heed more information ? [Go to Wiki](https://github.com/MaximovInk/UnityBasicInv
 <img src="https://i.imgur.com/H6EhYwO.png" alt="alt text" width="420" height="269">
 <img src="https://i.imgur.com/evMxCpa.png" alt="alt text" width="371" height="560">
 
+**Version 0.3.1**
+- Added inventory panels
+- Added assets and new uiElements
+- Added base for interact objects
+
 **Version 0.3**
 - Added more items, players for demo
-- Added drag items
+- Added world items
 - Added hotbar
 - Refactoring EventManager , Inventory , InventoryManager
 - Tooltip now has a built-in drop function
