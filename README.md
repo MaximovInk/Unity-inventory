@@ -30,9 +30,15 @@ Heed more information ? [Go to Wiki](https://github.com/MaximovInk/UnityBasicInv
 
 **Screenshots**
 
-<img src="https://i.imgur.com/HIouhXX.png" alt="alt text" width="420" height="269">
 <img src="https://i.imgur.com/H6EhYwO.png" alt="alt text" width="420" height="269">
 <img src="https://i.imgur.com/evMxCpa.png" alt="alt text" width="371" height="560">
+<img src="https://i.imgur.com/OeCae7D.png" alt="alt text" width="420" height="269">
+<img src="https://i.imgur.com/CZtjsuy.png" alt="alt text" width="420" height="269">
+
+**Version 0.3.2**
+- Added InvObjects(Storages..)
+- Fixed display tooltip behind the screen
+- Fixed other small bugs
 
 **Version 0.3.1**
 - Added inventory panels
