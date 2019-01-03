@@ -26,7 +26,7 @@ Heed more information ? [Go to Wiki](https://github.com/MaximovInk/UnityBasicInv
 - [ ] Weapons
 - [ ] Editor
 - [ ] Localization
-- [ ] Wiki
+- [ ] Wiki - wip
 
 **Screenshots**
 
