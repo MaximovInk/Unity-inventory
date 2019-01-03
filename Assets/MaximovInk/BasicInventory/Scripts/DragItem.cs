@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace MaximovInk.Inventory {
+
+    [Serializable]
     public class DragItem : MonoBehaviour
     {
         public DataItem item;

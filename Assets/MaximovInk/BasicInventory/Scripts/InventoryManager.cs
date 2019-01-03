@@ -15,6 +15,7 @@ namespace MaximovInk.Inventory
         public Button ActionButtonPrefab;
         public DragItem DragItemPrefab;
         public Button IconPrefab;
+        public Slot slotPrefab;
 
         public Image DragItem;
         public Tooltip Tooltip;
@@ -41,14 +42,14 @@ namespace MaximovInk.Inventory
         private void Awake()
         {
             if (!InventoryPanels.Contains(MainInventory))
-                AddInvPanel(MainInventory);
+                AddInventoryPanel(MainInventory);
 
             if (hotbar != null)
                 hotbar.Init();
 
             for (int i = 0; i < inventoryPanelsCustom.Count; i++)
             {
-                AddInvPanel(inventoryPanelsCustom[i]);
+                AddInventoryPanel(inventoryPanelsCustom[i]);
             }
 
             if (InventoryPanels.Count == 0)
@@ -179,7 +180,18 @@ namespace MaximovInk.Inventory
         {
             Tooltip.clear();
             Tooltip.init(slot);
+
             Tooltip.transform.position = slot.transform.position;
+            RectTransform rect = slot.GetComponent<RectTransform>();
+            Vector3 pos = slot.transform.position;
+            if (pos.y < Screen.height / 2)
+            {
+                Tooltip.transform.position = pos + new Vector3(0, Tooltip.GetComponent<RectTransform>().rect.height / 2 + rect.rect.height / 2, 0);
+            }
+            else
+            {
+                Tooltip.transform.position = pos - new Vector3(0, Tooltip.GetComponent<RectTransform>().rect.height / 2 + rect.rect.height / 2, 0);
+            }
         }
 
         public void HideDragItemText()
@@ -210,7 +222,7 @@ namespace MaximovInk.Inventory
             
         }
 
-        public int AddInvPanel(InventoryPanel panel)
+        public int AddInventoryPanel(InventoryPanel panel)
         {
             InventoryPanels.Add(panel);
             panel.Init();
@@ -220,15 +232,11 @@ namespace MaximovInk.Inventory
             return InventoryPanels.IndexOf(panel);
         }
 
-        public int InstantiateInvPanel(InventoryPanel panel)
+        public int InstantiateInventoryPanel(InventoryPanel panel)
         {
             InventoryPanel p = Instantiate(panel.gameObject, PanelsParent).GetComponent<InventoryPanel>();
-            InventoryPanels.Add(p);
-            p.Init();
-            Button b = Instantiate(IconPrefab.gameObject, IconsParent).GetComponent<Button>();
-            p.IconIndex = b.transform.GetSiblingIndex();
-            IconsRefresh();
-            return InventoryPanels.IndexOf(p);
+            p.gameObject.SetActive(false);
+            return AddInventoryPanel(p);
         }
 
         public void RemoveInventoryPanel(int index)
@@ -249,7 +257,7 @@ namespace MaximovInk.Inventory
 
                 int iDublicate = i;
 
-                b.onClick.AddListener(() => { InventoryPanels[iDublicate].gameObject.SetActive(true); });
+                b.onClick.AddListener(() => { InventoryPanels[iDublicate].GameObjectTurnActive(); });
 
                 for (int k = 0; k < InventoryPanels.Count; k++)
                 {

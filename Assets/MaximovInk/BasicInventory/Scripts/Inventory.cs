@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace MaximovInk.Inventory {
     public class Inventory : InventoryPanel
@@ -13,6 +14,7 @@ namespace MaximovInk.Inventory {
             {
                 slots[i].ID = i;
                 slots[i].Init();
+                slots[i].parent = this;
             }
         }
 
@@ -35,6 +37,10 @@ namespace MaximovInk.Inventory {
                 slots[index_slot].DataItem.Item = null;
                 slots[index_slot].refresh();
             }
+        }
+
+        public virtual void SlotsChanged()
+        {
         }
     }
 }

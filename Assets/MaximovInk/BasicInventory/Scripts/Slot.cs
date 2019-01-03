@@ -22,6 +22,8 @@ namespace MaximovInk.Inventory
         protected Slider condition_slider;
         protected Text count_text;
 
+        public Inventory parent;
+
         protected float clicked_timer = 1;
         protected bool clicked = false;
 
@@ -37,11 +39,12 @@ namespace MaximovInk.Inventory
                 count_text = GetComponentInChildren<Text>();
 
                 DataItem = StartItem;
-
                 refresh();
             }
 
             isInit = true;
+
+            
         }
 
         public virtual bool setItem(DataItem item)
@@ -92,6 +95,11 @@ namespace MaximovInk.Inventory
             condition_slider.gameObject.SetActive(condition_slider.value != 0 ? true : false);
             
             count_text.text = data_item.Item != null ? data_item.Count > 0 ? data_item.Count.ToString() : string.Empty : string.Empty;
+
+            if (parent != null)
+            {
+                parent.SlotsChanged();
+            }
         }
 
         public virtual void click()

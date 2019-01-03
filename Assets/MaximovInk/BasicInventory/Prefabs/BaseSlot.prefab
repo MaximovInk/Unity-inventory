@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 222830769287952052}
   - component: {fileID: 114643974657176980}
   - component: {fileID: 114091613031138054}
+  - component: {fileID: 114186062728606100}
   m_Layer: 5
   m_Name: BaseSlot
   m_TagString: Untagged
@@ -141,10 +142,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4545a8be2359f0242b440956eaeac61d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debug_item:
-    item: {fileID: 0}
-    condition: 1
-    count: 1
+  ID: 0
+  StartItem:
+    Item: {fileID: 0}
+  image: {fileID: 0}
+  parent: {fileID: 0}
 --- !u!114 &114124612174383990
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -173,6 +175,58 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 0.5}
   m_EffectDistance: {x: -1, y: 1}
   m_UseGraphicAlpha: 0
+--- !u!114 &114186062728606100
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1163444903748506}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 114643974657176980}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114091613031138054}
+        m_MethodName: click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114243158921313844
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -193,7 +247,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 12800000, guid: b0e217ef64c3c9743b53ee3d506dfd13, type: 3}
+    m_Font: {fileID: 12800000, guid: 39b6e794e99d2f54b95333fb6d0eac97, type: 3}
     m_FontSize: 8
     m_FontStyle: 0
     m_BestFit: 1
