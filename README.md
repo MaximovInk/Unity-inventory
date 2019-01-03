@@ -40,7 +40,8 @@ Heed more information ? [Go to Wiki](https://github.com/MaximovInk/UnityBasicInv
 - Added base for interact objects
 
 **Version 0.3**
-- Added more items, players for demo
+- Added more items
+- Added new demo
 - Added world items
 - Added hotbar
 - Refactoring EventManager , Inventory , InventoryManager
