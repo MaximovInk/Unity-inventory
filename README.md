@@ -22,11 +22,6 @@ Heed more information ? [Go to Wiki](https://github.com/MaximovInk/UnityBasicInv
 - [x] Hotbars
 - [x] Drop/Drag in world
 - [x] Storages and other interacts
-- [ ] Equipment
-- [ ] Weapons
-- [ ] Editor
-- [ ] Localization
-- [ ] Wiki - wip
 
 **Screenshots**
 
